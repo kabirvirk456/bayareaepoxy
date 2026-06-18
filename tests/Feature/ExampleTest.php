@@ -15,5 +15,29 @@ class ExampleTest extends TestCase
         $response = $this->get('/');
 
         $response->assertStatus(200);
+        $response->assertSee('Bay Area Epoxy Wholesale');
+    }
+
+    public function test_product_slug_is_preserved(): void
+    {
+        $response = $this->get('/products/crown-polymers-blue-label-epoxy-100-3-gallons-clear');
+
+        $response->assertStatus(200);
+        $response->assertSee('Enquire Now');
+    }
+
+    public function test_collection_slug_is_preserved(): void
+    {
+        $response = $this->get('/collections/urethane-cement');
+
+        $response->assertStatus(200);
+        $response->assertSee('CrownCrete');
+    }
+
+    public function test_cart_redirects_to_contact(): void
+    {
+        $response = $this->get('/cart');
+
+        $response->assertRedirect('/pages/contact');
     }
 }
