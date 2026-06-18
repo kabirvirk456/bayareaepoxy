@@ -9,13 +9,68 @@ $posts = fn () => collect(config('bayarea.posts'));
 $policies = fn () => collect(config('bayarea.policies'));
 
 Route::get('/', function () {
+    $schema = [
+        '@context' => 'https://schema.org',
+        '@graph' => [
+            [
+                '@type' => 'LocalBusiness',
+                '@id' => url('/').'#localbusiness',
+                'name' => config('bayarea.brand'),
+                'url' => url('/'),
+                'image' => config('bayarea.hero_image'),
+                'telephone' => config('bayarea.phone'),
+                'email' => config('bayarea.email'),
+                'address' => [
+                    '@type' => 'PostalAddress',
+                    'streetAddress' => '2495 American Ave',
+                    'addressLocality' => 'Hayward',
+                    'addressRegion' => 'CA',
+                    'postalCode' => '94545',
+                    'addressCountry' => 'US',
+                ],
+                'areaServed' => ['Bay Area', 'California', 'Hayward', 'San Jose', 'Oakland', 'San Francisco'],
+            ],
+            [
+                '@type' => 'FAQPage',
+                '@id' => url('/').'#faq',
+                'mainEntity' => [
+                    [
+                        '@type' => 'Question',
+                        'name' => 'Do you sell epoxy flooring supplies directly online?',
+                        'acceptedAnswer' => [
+                            '@type' => 'Answer',
+                            'text' => 'The website is built as an enquiry catalog. Contractors can review epoxy, urethane cement, flakes, pigments, tools, and topcoats, then request availability and pricing through WhatsApp, call, or text.',
+                        ],
+                    ],
+                    [
+                        '@type' => 'Question',
+                        'name' => 'Where is Bay Area Epoxy Wholesale located?',
+                        'acceptedAnswer' => [
+                            '@type' => 'Answer',
+                            'text' => 'Bay Area Epoxy Wholesale supports contractors from 2495 American Ave, Hayward, CA 94545.',
+                        ],
+                    ],
+                    [
+                        '@type' => 'Question',
+                        'name' => 'Which flooring systems can you help source?',
+                        'acceptedAnswer' => [
+                            '@type' => 'Answer',
+                            'text' => 'The catalog covers epoxy floor coatings, polyaspartic and urethane topcoats, urethane cement, cove base epoxy, flakes, metallic pigments, solid pigments, rollers, and squeegees.',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ];
+
     return view('welcome', [
-        'title' => 'Epoxy Supplier California | Flooring Products',
-        'description' => 'Wholesale epoxy flooring supplies and waterproofing products near Hayward, CA. Built for Bay Area contractors who need fast product guidance.',
+        'title' => 'Epoxy Flooring Supplies California | Bay Area Epoxy Supplier',
+        'description' => 'Wholesale epoxy flooring supplies in Hayward, CA for contractors across the Bay Area and California. Epoxy coatings, urethane cement, flakes, pigments, polyaspartic topcoats, tools, and WhatsApp quote support.',
         'image' => config('bayarea.hero_image'),
         'products' => collect(config('bayarea.products'))->take(8),
         'collections' => collect(config('bayarea.collections')),
         'posts' => collect(config('bayarea.posts'))->sortByDesc('date')->take(3),
+        'schema' => $schema,
     ]);
 })->name('home');
 

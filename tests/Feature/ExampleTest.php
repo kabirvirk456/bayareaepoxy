@@ -16,6 +16,7 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('Bay Area Epoxy Wholesale');
+        $response->assertSee('Epoxy flooring supplies for Bay Area contractors');
     }
 
     public function test_product_slug_is_preserved(): void

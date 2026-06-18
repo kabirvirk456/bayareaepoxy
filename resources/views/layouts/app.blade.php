@@ -30,6 +30,11 @@
     <meta name="facebook-domain-verification" content="{{ config('bayarea.tracking.facebook_domain_verification') }}">
     <link rel="stylesheet" href="{{ asset('site.css') }}">
     @include('partials.tracking')
+    @isset($schema)
+        <script type="application/ld+json">
+            {!! json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
+        </script>
+    @endisset
 </head>
 <body>
     @if (config('bayarea.tracking.gtm_id'))
