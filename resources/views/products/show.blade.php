@@ -7,10 +7,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="product-detail">
-        <div class="product-media">
-            <img src="{{ $product['image'] ?: config('bayarea.hero_image') }}" alt="{{ $product['title'] }}">
-        </div>
+    <section class="product-detail pro-product">
         <div class="product-summary">
             <p class="eyebrow">{{ $product['category'] }}</p>
             <h1>{{ $product['title'] }}</h1>
@@ -39,9 +36,16 @@
                 <a class="button button-secondary" href="tel:{{ config('bayarea.phone_href') }}">Call {{ config('bayarea.phone') }}</a>
             </div>
         </div>
+        <div class="product-media product-media-stack">
+            <img src="{{ $product['image'] ?: config('bayarea.hero_image') }}" alt="{{ $product['title'] }}">
+            <div class="product-quote-panel">
+                <span>Quote channel</span>
+                <strong>WhatsApp product link, job notes, and pickup timing.</strong>
+            </div>
+        </div>
     </section>
 
-    <section class="section muted">
+    <section class="section product-notes">
         <div class="two-column">
             <div>
                 <p class="eyebrow">Product notes</p>

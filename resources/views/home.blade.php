@@ -2,38 +2,62 @@
     $heroMessage = 'Hi Bay Area Epoxy Wholesale, I need help choosing epoxy flooring supplies.';
     $heroWhatsapp = 'https://wa.me/'.config('bayarea.whatsapp_number').'?text='.rawurlencode($heroMessage);
 @endphp
-<section class="hero" style="background-image: linear-gradient(90deg, rgba(12, 15, 18, .88), rgba(12, 15, 18, .55), rgba(12, 15, 18, .18)), url('{{ config('bayarea.hero_image') }}')">
-    <div class="hero-content">
-        <p class="eyebrow">Hayward, CA wholesale supply</p>
-        <h1>Bay Area Epoxy Wholesale</h1>
-        <p>Industrial epoxy, urethane cement, waterproofing, flakes, pigments, and installation supplies for contractors across the Bay Area and California.</p>
+<section class="command-hero">
+    <div class="hero-copy">
+        <p class="eyebrow">Hayward contractor supply desk</p>
+        <h1>Industrial coating materials without the checkout friction.</h1>
+        <p>Epoxy, urethane cement, topcoats, flakes, pigments, and installation tools organized around real jobsite decisions for Bay Area coating crews.</p>
         <div class="hero-actions">
             <a class="button button-primary" href="{{ $heroWhatsapp }}" data-track-enquiry data-product="Home Hero">Enquire Now</a>
-            <a class="button button-light" href="{{ url('/collections/all') }}">View Products</a>
+            <a class="button button-secondary" href="{{ url('/collections/all') }}">Browse Catalog</a>
+        </div>
+        <dl class="hero-metrics">
+            <div>
+                <dt>17</dt>
+                <dd>catalog products migrated</dd>
+            </div>
+            <div>
+                <dt>7</dt>
+                <dd>system categories</dd>
+            </div>
+            <div>
+                <dt>CA</dt>
+                <dd>contractor supply support</dd>
+            </div>
+        </dl>
+    </div>
+    <div class="hero-visual">
+        <img src="{{ config('bayarea.hero_image') }}" alt="Crown Polymers epoxy product">
+        <div class="supply-board">
+            <span>Fast enquiry path</span>
+            <strong>No cart. No checkout. Direct product support.</strong>
         </div>
     </div>
 </section>
 
-<section class="trust-strip">
-    <div>
-        <strong>Local pickup</strong>
-        <span>Hayward warehouse support</span>
-    </div>
-    <div>
-        <strong>Contractor focused</strong>
-        <span>System-based product guidance</span>
-    </div>
-    <div>
-        <strong>Direct enquiry</strong>
-        <span>WhatsApp and call/text support</span>
-    </div>
+<section class="decision-strip">
+    <a href="{{ url('/collections/epoxy-for-concrete-floors') }}">
+        <span>01</span>
+        <strong>Build an epoxy system</strong>
+        <em>Base coat, pigment, flakes, topcoat</em>
+    </a>
+    <a href="{{ url('/collections/urethane-cement') }}">
+        <span>02</span>
+        <strong>Specify urethane cement</strong>
+        <em>Thermal shock and industrial abuse</em>
+    </a>
+    <a href="{{ url('/pages/contact') }}">
+        <span>03</span>
+        <strong>Confirm availability</strong>
+        <em>Pickup, delivery, and quote support</em>
+    </a>
 </section>
 
-<section class="section">
+<section class="section systems-section">
     <div class="section-heading">
         <p class="eyebrow">Shop by system</p>
-        <h2>Find the right coating path faster.</h2>
-        <p>Products are grouped by real floor systems so crews can move from project condition to material list quickly.</p>
+        <h2>Choose by coating workflow, not store aisle.</h2>
+        <p>Each category maps to a jobsite decision: base system, protection layer, broadcast media, specialty mortar, or crew tools.</p>
     </div>
     <div class="system-grid">
         @foreach ($collections as $slug => $collection)
@@ -46,32 +70,34 @@
     </div>
 </section>
 
-<section class="section muted">
+<section class="section product-showcase">
     <div class="section-heading">
-        <p class="eyebrow">Featured catalog</p>
-        <h2>Wholesale products ready for enquiry.</h2>
-        <p>No checkout detour. Open the product, send the enquiry, and coordinate availability with the Hayward team.</p>
+        <p class="eyebrow">Featured supply</p>
+        <h2>Quote-ready product cards for mobile crews.</h2>
+        <p>Cards stay compact, scannable, and action-focused so phone users can move from product interest to WhatsApp enquiry quickly.</p>
     </div>
-    <div class="product-grid">
+    <div class="product-grid dense">
         @foreach ($products as $product)
             @include('partials.product-card', ['product' => $product])
         @endforeach
     </div>
 </section>
 
-<section class="split-band">
+<section class="workflow-band">
     <div>
         <p class="eyebrow">Project support</p>
-        <h2>From material selection to crew-ready supply.</h2>
-        <p>Share the square footage, substrate condition, desired finish, traffic level, and project timeline. The team can help narrow the system and product list before pickup or delivery planning.</p>
+        <h2>From substrate notes to crew-ready material list.</h2>
+        <p>Share square footage, concrete condition, desired finish, traffic level, and project timeline. The team can help narrow the system before pickup or delivery planning.</p>
         <a class="button button-primary" href="{{ url('/pages/contact') }}">Contact the Warehouse</a>
     </div>
-    <ul class="check-list">
-        <li>Epoxy flake, solid color, quartz, and metallic systems</li>
-        <li>Urethane cement for thermal shock and industrial abuse</li>
-        <li>Protective topcoats for abrasion, stains, and gloss retention</li>
-        <li>Tools, rollers, squeegees, pigments, and broadcast media</li>
-    </ul>
+    <div class="workflow-grid">
+        <span>Prep</span>
+        <span>Prime</span>
+        <span>Build</span>
+        <span>Broadcast</span>
+        <span>Topcoat</span>
+        <span>Maintain</span>
+    </div>
 </section>
 
 <section class="section">

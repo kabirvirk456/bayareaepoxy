@@ -38,21 +38,21 @@
 
     <header class="site-header">
         <div class="topbar">
+            <span>Wholesale resinous flooring supply in Hayward, CA</span>
             <a href="tel:{{ config('bayarea.phone_href') }}">Call/Text {{ config('bayarea.phone') }}</a>
-            <span>{{ config('bayarea.address') }}</span>
         </div>
         <div class="nav-shell">
             <a class="brand" href="{{ route('home') }}" aria-label="{{ $brand }}">
                 <img src="{{ config('bayarea.logo_image') }}" alt="{{ $brand }} logo">
-                <span>{{ $brand }}</span>
+                <span>Bay Area Epoxy</span>
             </a>
             <nav class="desktop-nav" aria-label="Main navigation">
                 <a href="{{ url('/collections/epoxy-for-concrete-floors') }}">Epoxy</a>
                 <a href="{{ url('/collections/urethane-cement') }}">Urethane Cement</a>
+                <a href="{{ url('/collections/protective-coat') }}">Topcoats</a>
                 <a href="{{ url('/collections/flakes') }}">Flakes</a>
                 <a href="{{ url('/collections/all') }}">Products</a>
                 <a href="{{ url('/pages/training-schedule') }}">Training</a>
-                <a href="{{ url('/blogs/news') }}">Blog</a>
             </nav>
             <div class="nav-actions">
                 <form class="search-form" action="{{ route('search') }}" method="get">
@@ -66,7 +66,10 @@
                 <nav aria-label="Mobile navigation">
                     <a href="{{ url('/collections/epoxy-for-concrete-floors') }}">Epoxy</a>
                     <a href="{{ url('/collections/urethane-cement') }}">Urethane Cement</a>
+                    <a href="{{ url('/collections/protective-coat') }}">Topcoats</a>
+                    <a href="{{ url('/collections/flakes') }}">Flakes</a>
                     <a href="{{ url('/collections/all') }}">Products</a>
+                    <a href="{{ url('/pages/training-schedule') }}">Training</a>
                     <a href="{{ url('/pages/contact') }}">Contact</a>
                     <a href="{{ $whatsapp }}" data-track-enquiry data-product="General">Enquire Now</a>
                 </nav>
@@ -111,6 +114,12 @@
             <a href="{{ $whatsapp }}" data-track-enquiry data-product="Footer">WhatsApp {{ config('bayarea.phone') }}</a>
         </div>
     </footer>
+
+    <nav class="mobile-action-bar" aria-label="Quick actions">
+        <a href="{{ url('/collections/all') }}">Products</a>
+        <a href="tel:{{ config('bayarea.phone_href') }}">Call</a>
+        <a class="mobile-action-primary" href="{{ $whatsapp }}" data-track-enquiry data-product="Mobile Bar">WhatsApp</a>
+    </nav>
 
     <script src="{{ asset('site.js') }}" defer></script>
 </body>

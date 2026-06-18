@@ -17,7 +17,7 @@
                 <h2>{{ $query ? 'Results for "'.$query.'"' : 'Popular Products' }}</h2>
             </div>
         </div>
-        <div class="product-grid">
+        <div class="product-grid dense">
             @forelse ($products as $product)
                 @include('partials.product-card', ['product' => $product])
             @empty
