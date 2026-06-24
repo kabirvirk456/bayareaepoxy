@@ -1,200 +1,305 @@
 @php
-    $heroMessage = 'Hi Bay Area Epoxy Wholesale, I need help with epoxy flooring supplies for a project.';
+    $products = collect(config('bayarea.products'))->values();
+    $posts = collect($posts ?? config('bayarea.posts'))->sortByDesc('date')->take(3)->values();
+    $productsBySlug = $products->keyBy('slug');
+    $heroMessage = 'Hi Bay Area Epoxy Wholesale, I need contractor pricing for an industrial flooring or waterproofing project.';
     $heroWhatsapp = 'https://wa.me/'.config('bayarea.whatsapp_number').'?text='.rawurlencode($heroMessage);
-    $systems = [
+    $heroAsset = asset('assets/home-reference-hero.png');
+    $legacyHeroAsset = asset('assets/home-industrial-hero.png');
+    $esdAsset = asset('assets/home-esd-ai.png');
+
+    $featuredProducts = collect([
+        $productsBySlug->get('crown-polymers-blue-label-epoxy-100-3-gallons-clear'),
+        $productsBySlug->get('crown-polymers-blue-label-polyaspartic-100-3-gallons-clear'),
+        $productsBySlug->get('814-crowncrete-u-1-4'),
+        $productsBySlug->get('1-4-40-lbs-flakes-box'),
+    ])->filter()->values();
+
+    $heroBadges = [
+        ['icon' => 'shield', 'title' => 'Authorized Crown Distributor'],
+        ['icon' => 'gear', 'title' => 'Technical Support'],
+        ['icon' => 'cap', 'title' => 'Contractor Training'],
+        ['icon' => 'truck', 'title' => 'In Stock California Warehouse'],
+        ['icon' => 'fast', 'title' => 'Fast Delivery Across CA'],
+    ];
+
+    $stats = [
+        ['icon' => 'trophy', 'value' => '50+', 'label' => 'Years Combined Industry Experience'],
+        ['icon' => 'plant', 'value' => '1,000+', 'label' => 'Projects Supported'],
+        ['icon' => 'shield', 'value' => '4', 'label' => 'Premium Coating Brands'],
+        ['icon' => 'gear', 'value' => '100%', 'label' => 'California Coverage'],
+        ['icon' => 'headset', 'value' => '24/7', 'label' => 'Technical Support'],
+        ['icon' => 'ca', 'value' => '', 'label' => 'Proudly Serving California'],
+    ];
+
+    $solutions = [
         [
-            'title' => 'Epoxy Floor Coatings',
-            'url' => url('/collections/epoxy-for-concrete-floors'),
-            'copy' => '100% solids epoxy, clear epoxy, pigment systems, and base coat materials for garages, warehouses, showrooms, and industrial concrete floors.',
-            'keywords' => ['Epoxy resin', 'Concrete coatings', 'Solid color systems'],
+            'title' => 'Data Centers',
+            'subtitle' => 'ESD & Conductive Flooring Systems',
+            'url' => url('/pages/esd-static-dissipative-conductive'),
+            'image' => $heroAsset,
+            'position' => 'center',
         ],
         [
-            'title' => 'Polyaspartic & Urethane Topcoats',
-            'url' => url('/collections/protective-coat'),
-            'copy' => 'Abrasion-resistant clear topcoats, UV-stable urethane finishes, and polyaspartic coatings for longer gloss retention and faster return to service.',
-            'keywords' => ['Polyaspartic', 'UV stable topcoat', 'Chemical resistance'],
+            'title' => 'Warehouses & Logistics',
+            'subtitle' => 'Durable Floors Built For Heavy Traffic',
+            'url' => url('/blogs/news/best-epoxy-flooring-for-warehouse-in-usa-complete-industrial-guide'),
+            'image' => $legacyHeroAsset,
+            'position' => 'center',
         ],
         [
-            'title' => 'Urethane Cement Systems',
+            'title' => 'Manufacturing Facilities',
+            'subtitle' => 'Chemical & Wear Resistant Systems',
             'url' => url('/collections/urethane-cement'),
-            'copy' => 'CrownCrete U skim coat, self-leveling, and trowel-grade materials for kitchens, breweries, food plants, manufacturing, and thermal shock areas.',
-            'keywords' => ['Urethane cement', 'Thermal shock', 'Industrial floors'],
+            'image' => $heroAsset,
+            'position' => '55% center',
         ],
         [
-            'title' => 'Flakes, Metallics & Pigments',
-            'url' => url('/collections/flakes'),
-            'copy' => 'Decorative flakes, metallic pigments, standard epoxy colors, and broadcast media for durable floors with cleaner finish control.',
-            'keywords' => ['Epoxy flakes', 'Metallic pigments', 'Color systems'],
+            'title' => 'Parking Structures & Decks',
+            'subtitle' => 'Waterproofing & Traffic Coating Systems',
+            'url' => url('/pages/deck-waterproofing-in-california'),
+            'image' => config('bayarea.collections.protective-coat.image'),
+            'position' => 'center',
+        ],
+        [
+            'title' => 'Commercial Spaces',
+            'subtitle' => 'Decorative & High Performance Floors',
+            'url' => url('/collections/metallic-colors'),
+            'image' => config('bayarea.collections.metallic-colors.image'),
+            'position' => 'center',
+        ],
+        [
+            'title' => 'Food & Beverage Facilities',
+            'subtitle' => 'Hygienic & Seamless Urethane Systems',
+            'url' => url('/blogs/news/epoxy-concrete-coatings-the-ideal-solution-for-food-beverage-manufacturing'),
+            'image' => config('bayarea.collections.urethane-cement.image'),
+            'position' => 'center',
         ],
     ];
-    $industries = [
-        'Commercial garages and showrooms',
-        'Warehouses and logistics floors',
-        'Food and beverage manufacturing',
-        'Wineries, breweries, and production spaces',
-        'Commercial kitchens and wet-service areas',
-        'Industrial shops and maintenance facilities',
+
+    $manufacturers = ['Crown Polymers', 'Polycoat Products', 'Premera', 'General Coatings'];
+    $resourceImages = [$heroAsset, $legacyHeroAsset, config('bayarea.collections.protective-coat.image')];
+
+    $capabilities = [
+        ['icon' => 'molecule', 'title' => 'Premium Products', 'copy' => 'Industrial grade materials from leading global manufacturers'],
+        ['icon' => 'gear', 'title' => 'Technical Expertise', 'copy' => 'On-site recommendations & system selection'],
+        ['icon' => 'building', 'title' => 'Training & Education', 'copy' => 'Hands-on programs to build contractor success'],
+        ['icon' => 'support', 'title' => 'Project Support', 'copy' => 'Estimations, details & installation guidance'],
+        ['icon' => 'quality', 'title' => 'Quality Assurance', 'copy' => 'Consistent performance on every project'],
     ];
-    $areas = ['Hayward', 'Oakland', 'San Jose', 'San Francisco', 'Fremont', 'San Leandro', 'Santa Clara', 'Walnut Creek', 'Palo Alto', 'Sacramento'];
-    $faqs = [
+
+    $systemTiles = [
         [
-            'question' => 'Do you sell epoxy flooring supplies directly online?',
-            'answer' => 'This website is built as a contractor enquiry catalog. Review the products, then send a WhatsApp enquiry for availability, pickup timing, system guidance, and quote support.',
+            'label' => 'ESD Flooring Systems',
+            'title' => 'For Data Centers & Technology Facilities',
+            'copy' => 'Our ESD flooring systems help prevent electrostatic discharge and support long-term performance.',
+            'url' => url('/pages/esd-static-dissipative-conductive'),
+            'cta' => 'Learn More',
+            'image' => $esdAsset,
+            'accent' => 'blue',
         ],
         [
-            'question' => 'What epoxy products do you supply in California?',
-            'answer' => 'The catalog includes epoxy coatings, polyaspartic topcoats, urethane topcoats, urethane cement, cove base epoxy, flakes, metallic pigments, solid pigments, rollers, and squeegees.',
+            'label' => 'Waterproofing Solutions',
+            'title' => 'For Commercial & Industrial Projects',
+            'copy' => 'From balconies and decks to rooftops and parking structures, our systems are built to protect and last.',
+            'url' => url('/pages/deck-waterproofing-in-california'),
+            'cta' => 'Learn More',
+            'image' => config('bayarea.collections.protective-coat.image'),
+            'accent' => 'gold',
         ],
         [
-            'question' => 'Can you help choose a complete floor coating system?',
-            'answer' => 'Yes. Share the square footage, concrete condition, traffic, chemical exposure, desired finish, and installation schedule. The team can help narrow the primer, base coat, broadcast, and topcoat path.',
+            'label' => 'Urethane Cement Flooring Systems',
+            'title' => 'Built For Extreme Performance',
+            'copy' => 'High-strength, chemical resistant and thermal shock resistant systems for the toughest environments.',
+            'url' => url('/collections/urethane-cement'),
+            'cta' => 'Learn More',
+            'image' => $legacyHeroAsset,
+            'accent' => 'gold',
         ],
         [
-            'question' => 'Where can contractors pick up products?',
-            'answer' => 'Bay Area Epoxy Wholesale supports contractors from 2495 American Ave, Hayward, CA 94545. Contact the team before arrival to confirm product availability.',
+            'label' => 'Contractor Training',
+            'title' => 'Hands-On. Real World. Jobsite Focused.',
+            'copy' => 'Monthly training programs covering surface prep, moisture mitigation, installation techniques and system applications.',
+            'url' => url('/pages/training-schedule'),
+            'cta' => 'View Training Schedule',
+            'image' => config('bayarea.hero_image'),
+            'accent' => 'blue',
         ],
     ];
 @endphp
 
-<section class="home-hero" style="background-image: linear-gradient(90deg, rgba(9, 11, 10, .9), rgba(9, 11, 10, .62), rgba(9, 11, 10, .22)), url('{{ config('bayarea.hero_image') }}')">
-    <div class="home-hero-inner">
-        <p class="eyebrow">Epoxy supplier in Hayward, California</p>
-        <h1>Epoxy flooring supplies for Bay Area contractors.</h1>
-        <p>Wholesale epoxy coatings, urethane cement, polyaspartic topcoats, flakes, pigments, and installation tools with direct WhatsApp quote support from a local supply team.</p>
-        <form class="hero-search" action="{{ route('search') }}" method="get">
-            <input type="search" name="q" placeholder="Search epoxy, urethane cement, flakes, pigments">
-            <button type="submit">Search Catalog</button>
-        </form>
-        <div class="hero-actions">
-            <a class="button button-primary" href="{{ $heroWhatsapp }}" data-track-enquiry data-product="SEO Home Hero">Get Product Guidance</a>
-            <a class="button button-light-solid" href="{{ url('/collections/all') }}">View Wholesale Catalog</a>
+<section class="ref-hero" style="background-image: linear-gradient(90deg, rgba(5, 17, 34, .96) 0%, rgba(5, 17, 34, .82) 31%, rgba(5, 17, 34, .25) 64%, rgba(5, 17, 34, .06) 100%), url('{{ $heroAsset }}')">
+    <div class="hero-wall-logo" aria-hidden="true">
+        <strong>BAE</strong>
+        <span>Bay Area<br>Epoxy Wholesale</span>
+    </div>
+
+    <div class="ref-hero-inner">
+        <div class="ref-hero-copy">
+            <h1>California&rsquo;s Most Trusted Industrial Flooring & Waterproofing <span>Partner</span></h1>
+            <p>High-performance epoxy, ESD flooring, urethane cement and waterproofing systems for data centers, warehouses, manufacturing and commercial facilities.</p>
+
+            <div class="ref-hero-badges">
+                @foreach ($heroBadges as $badge)
+                    <div>
+                        <i class="ref-icon ref-icon-{{ $badge['icon'] }}"></i>
+                        <strong>{{ $badge['title'] }}</strong>
+                    </div>
+                @endforeach
+            </div>
+
+            <div class="ref-hero-actions">
+                <a class="button button-primary" href="{{ $heroWhatsapp }}" data-track-enquiry data-product="Home Contractor Pricing">Get Contractor Pricing</a>
+                <a class="button button-outline-light" href="{{ url('/collections/all') }}">Explore Systems</a>
+            </div>
         </div>
-        <div class="hero-trust-line">
-            <span>Hayward warehouse</span>
-            <span>Contractor pricing enquiries</span>
-            <span>Epoxy, urethane cement, topcoats, flakes</span>
-        </div>
+
+        <aside class="ref-location-card">
+            <div>
+                <i class="ref-icon ref-icon-pin"></i>
+                <strong>Hayward, California Distribution Hub</strong>
+            </div>
+            <ul>
+                <li>Local Pickup</li>
+                <li>Technical Assistance</li>
+                <li>Jobsite Support</li>
+                <li>California Wide Shipping</li>
+            </ul>
+        </aside>
+    </div>
+
+    <div class="ref-stats-panel" aria-label="Company proof points">
+        @foreach ($stats as $stat)
+            <div class="ref-stat">
+                <i class="ref-icon ref-icon-{{ $stat['icon'] }}"></i>
+                @if ($stat['value'])
+                    <strong>{{ $stat['value'] }}</strong>
+                @endif
+                <span>{{ $stat['label'] }}</span>
+            </div>
+        @endforeach
     </div>
 </section>
 
-<section class="intent-panel">
-    <div>
-        <span>01</span>
-        <strong>Find the correct coating system</strong>
-        <p>Compare epoxy, urethane cement, protective topcoats, flakes, pigments, and accessories by project need.</p>
+<section class="ref-solutions">
+    <div class="ref-solutions-heading">
+        <h2>Solutions For Every Industry</h2>
+        <span></span>
     </div>
-    <div>
-        <span>02</span>
-        <strong>Send job details through WhatsApp</strong>
-        <p>Share square footage, substrate condition, traffic, finish, and pickup timeline for faster guidance.</p>
-    </div>
-    <div>
-        <span>03</span>
-        <strong>Confirm availability before mobilizing</strong>
-        <p>Coordinate stock, system components, and contractor pickup from the Hayward supply location.</p>
-    </div>
-</section>
 
-<section class="section seo-intro">
-    <div class="seo-intro-copy">
-        <p class="eyebrow">Wholesale epoxy flooring supplies California</p>
-        <h2>Built for installers who need the right material before the crew arrives.</h2>
-        <p>Bay Area Epoxy Wholesale helps contractors source professional resinous flooring products for concrete floors across California. The catalog is organized for real project decisions: base coat, body coat, broadcast media, color, cove base, urethane cement, polyaspartic topcoat, and installation tools.</p>
-        <p>Instead of forcing a generic checkout, every product path leads to an enquiry so you can confirm compatibility, coverage, availability, and pickup timing before work starts.</p>
-    </div>
-    <aside class="seo-proof">
-        <strong>Primary supply categories</strong>
-        <ul>
-            <li>Epoxy floor coating materials</li>
-            <li>Polyaspartic and urethane topcoats</li>
-            <li>CrownCrete U urethane cement</li>
-            <li>Decorative flakes and metallic pigments</li>
-            <li>Rollers, squeegees, and coating tools</li>
-        </ul>
-    </aside>
-</section>
-
-<section class="section solutions-section">
-    <div class="section-heading wide-heading">
-        <p class="eyebrow">Floor coating systems</p>
-        <h2>Professional product paths for concrete coating projects.</h2>
-        <p>Choose the system family first, then send a product enquiry for job-specific recommendations and availability.</p>
-    </div>
-    <div class="solution-grid">
-        @foreach ($systems as $system)
-            <a class="solution-card" href="{{ $system['url'] }}">
-                <span>{{ str_pad((string) ($loop->index + 1), 2, '0', STR_PAD_LEFT) }}</span>
-                <h3>{{ $system['title'] }}</h3>
-                <p>{{ $system['copy'] }}</p>
+    <div class="ref-solutions-grid">
+        @foreach ($solutions as $solution)
+            <a class="ref-solution-card" href="{{ $solution['url'] }}" style="background-image: linear-gradient(180deg, rgba(6, 20, 39, .05), rgba(6, 20, 39, .92)), url('{{ $solution['image'] }}'); background-position: {{ $solution['position'] }};">
                 <div>
-                    @foreach ($system['keywords'] as $keyword)
-                        <em>{{ $keyword }}</em>
-                    @endforeach
+                    <h3>{{ $solution['title'] }}</h3>
+                    <p>{{ $solution['subtitle'] }}</p>
+                    <span></span>
+                </div>
+            </a>
+        @endforeach
+
+        <a class="ref-esd-card" href="{{ url('/pages/esd-static-dissipative-conductive') }}" style="background-image: linear-gradient(90deg, rgba(5, 18, 40, .98), rgba(5, 18, 40, .4)), url('{{ $esdAsset }}')">
+            <h3>ESD Flooring<br>For The AI Era</h3>
+            <p>Future-ready solutions for mission critical infrastructure.</p>
+            <span>Learn More</span>
+        </a>
+    </div>
+</section>
+
+<section class="ref-manufacturer-strip">
+    <span>Trusted Manufacturers</span>
+    @foreach ($manufacturers as $manufacturer)
+        <strong>{{ $manufacturer }}</strong>
+    @endforeach
+</section>
+
+<section class="ref-capabilities">
+    <div class="ref-capability-list">
+        @foreach ($capabilities as $capability)
+            <article>
+                <i class="ref-icon ref-icon-{{ $capability['icon'] }}"></i>
+                <div>
+                    <h3>{{ $capability['title'] }}</h3>
+                    <p>{{ $capability['copy'] }}</p>
+                </div>
+            </article>
+        @endforeach
+    </div>
+    <div class="ref-facility-image" style="background-image: linear-gradient(90deg, rgba(5, 18, 40, .04), rgba(5, 18, 40, .12)), url('{{ $heroAsset }}')">
+        <div aria-hidden="true">
+            <strong>BAE</strong>
+            <span>Epoxy Wholesale</span>
+        </div>
+    </div>
+</section>
+
+<section class="homepage-system-band restored-system-band">
+    @foreach ($systemTiles as $tile)
+        <a class="homepage-system-tile tile-{{ $tile['accent'] }}" href="{{ $tile['url'] }}" style="background-image: linear-gradient(180deg, rgba(5, 14, 28, .16), rgba(5, 14, 28, .94)), url('{{ $tile['image'] }}')">
+            <span>{{ $tile['label'] }}</span>
+            <h2>{{ $tile['title'] }}</h2>
+            <p>{{ $tile['copy'] }}</p>
+            <strong>{{ $tile['cta'] }}</strong>
+        </a>
+    @endforeach
+</section>
+
+<section class="homepage-products-feature section" id="products">
+    <div class="homepage-products-copy">
+        <p class="eyebrow">Featured products</p>
+        <h2>Stock the right system before the crew mobilizes.</h2>
+        <p>Browse contractor-ready epoxy, polyaspartic, urethane cement, flakes, pigments, topcoats, and tools. Product pages are built for pricing, stock, pickup, and technical guidance from the Bay Area Epoxy Wholesale team.</p>
+        <ul>
+            <li>Epoxy base coats and decorative metallic systems</li>
+            <li>Polyaspartic and urethane protective topcoats</li>
+            <li>CrownCrete U systems for heavy-service floors</li>
+            <li>Flakes, pigments, rollers, squeegees, and accessories</li>
+        </ul>
+        <a class="button button-primary" href="{{ url('/collections/all') }}">View All Products</a>
+    </div>
+    <div class="home-featured-product-grid">
+        @foreach ($featuredProducts as $product)
+            @php
+                $productUrl = url('/products/'.$product['slug']);
+                $priceLabel = isset($product['price']) ? '$'.rtrim(rtrim(number_format((float) $product['price'], 2), '0'), '.') : 'Quote';
+            @endphp
+            <a class="home-featured-product" href="{{ $productUrl }}">
+                <img src="{{ $product['image'] }}" alt="{{ $product['title'] }}" loading="lazy">
+                <div>
+                    <span>{{ $product['category'] }}</span>
+                    <h3>{{ $product['title'] }}</h3>
+                    <p>{{ $product['summary'] }}</p>
+                    <strong>{{ $priceLabel }}</strong>
                 </div>
             </a>
         @endforeach
     </div>
 </section>
 
-<section class="section industries-section">
+<section class="homepage-resources section">
+    <div class="resources-intro">
+        <p class="eyebrow">Latest insights & resources</p>
+        <h2>Expert knowledge. Better results.</h2>
+        <p>Actionable guides, product notes, and field-focused insights to help you choose the right system before work starts.</p>
+        <a class="button button-secondary" href="{{ url('/blogs/news') }}">View All Articles</a>
+    </div>
+    <div class="resource-card-grid">
+        @foreach ($posts as $post)
+            @php($resourceImage = $resourceImages[$loop->index] ?? $heroAsset)
+            <a class="resource-card" href="{{ url('/blogs/'.$post['blog'].'/'.$post['slug']) }}">
+                <img src="{{ $resourceImage }}" alt="{{ $post['title'] }}" loading="lazy">
+                <time datetime="{{ $post['date'] }}">{{ strtoupper(date('M j, Y', strtotime($post['date']))) }}</time>
+                <h3>{{ $post['title'] }}</h3>
+                <span>Read More</span>
+            </a>
+        @endforeach
+    </div>
+</section>
+
+<section class="homepage-final-cta">
     <div>
-        <p class="eyebrow">Commercial and industrial applications</p>
-        <h2>Epoxy flooring products for demanding concrete environments.</h2>
-        <p>From decorative garage systems to heavy-service urethane cement, product selection should follow traffic, chemical exposure, cleaning method, temperature swing, and downtime requirements.</p>
-        <a class="button button-primary" href="{{ url('/pages/contact') }}">Request System Help</a>
+        <span>Ready to start your next project?</span>
+        <p>Our team is here to help you choose the right products and systems.</p>
     </div>
-    <div class="industry-list">
-        @foreach ($industries as $industry)
-            <span>{{ $industry }}</span>
-        @endforeach
-    </div>
-</section>
-
-<section class="section product-showcase">
-    <div class="section-heading wide-heading">
-        <p class="eyebrow">High-demand contractor supplies</p>
-        <h2>Fast paths to popular epoxy, urethane cement, topcoat, and flake products.</h2>
-        <p>Each product page keeps the existing Shopify slug for SEO continuity while replacing “Buy Now” with direct enquiry for pricing, stock, and project guidance.</p>
-    </div>
-    <div class="product-grid dense">
-        @foreach ($products as $product)
-            @include('partials.product-card', ['product' => $product])
-        @endforeach
-    </div>
-</section>
-
-<section class="section service-area">
-    <div>
-        <p class="eyebrow">Bay Area and California supply support</p>
-        <h2>Local epoxy supplier for contractors across Northern California.</h2>
-        <p>Based in Hayward, Bay Area Epoxy Wholesale supports coating crews, builders, facility teams, and installers looking for professional epoxy flooring supplies near the Bay Area.</p>
-    </div>
-    <div class="area-grid">
-        @foreach ($areas as $area)
-            <span>{{ $area }}</span>
-        @endforeach
-    </div>
-</section>
-
-<section class="section faq-section" id="faq">
-    <div class="section-heading">
-        <p class="eyebrow">Epoxy supplier FAQ</p>
-        <h2>Common questions before requesting a quote.</h2>
-    </div>
-    <div class="faq-grid">
-        @foreach ($faqs as $faq)
-            <details>
-                <summary>{{ $faq['question'] }}</summary>
-                <p>{{ $faq['answer'] }}</p>
-            </details>
-        @endforeach
-    </div>
-</section>
-
-<section class="final-cta">
-    <div>
-        <p class="eyebrow">Ready to source materials?</p>
-        <h2>Send the product list, job size, and timeline. We’ll help you move faster.</h2>
-    </div>
-    <a class="button button-primary" href="{{ $heroWhatsapp }}" data-track-enquiry data-product="Home Final CTA">Start WhatsApp Enquiry</a>
+    <a class="button button-primary" href="{{ $heroWhatsapp }}" data-track-enquiry data-product="Home Final CTA">Contact Our Team</a>
 </section>

@@ -42,41 +42,41 @@
     @endif
 
     <header class="site-header">
-        <div class="topbar">
-            <span>Wholesale resinous flooring supply in Hayward, CA</span>
-            <a href="tel:{{ config('bayarea.phone_href') }}">Call/Text {{ config('bayarea.phone') }}</a>
-        </div>
         <div class="nav-shell">
             <a class="brand" href="{{ route('home') }}" aria-label="{{ $brand }}">
-                <img src="{{ config('bayarea.logo_image') }}" alt="{{ $brand }} logo">
-                <span>Bay Area Epoxy</span>
+                <img src="{{ config('bayarea.logo_image') }}" alt="{{ $brand }}" loading="eager" decoding="async">
             </a>
             <nav class="desktop-nav" aria-label="Main navigation">
-                <a href="{{ url('/collections/epoxy-for-concrete-floors') }}">Epoxy</a>
-                <a href="{{ url('/collections/urethane-cement') }}">Urethane Cement</a>
-                <a href="{{ url('/collections/protective-coat') }}">Topcoats</a>
-                <a href="{{ url('/collections/flakes') }}">Flakes</a>
+                <a href="{{ route('home') }}">Home</a>
                 <a href="{{ url('/collections/all') }}">Products</a>
+                <a href="{{ url('/pages/structural-concrete-repair') }}">Repair</a>
+                <a href="{{ url('/collections/epoxy-for-concrete-floors') }}">Epoxy</a>
+                <a href="{{ url('/collections/protective-coat') }}">Protective</a>
+                <a href="{{ url('/pages/deck-waterproofing-in-california') }}">Waterproofing</a>
+                <a href="{{ url('/pages/esd-static-dissipative-conductive') }}">ESD</a>
                 <a href="{{ url('/pages/training-schedule') }}">Training</a>
+                <a href="{{ url('/blogs/news') }}">Blogs</a>
+                <a href="{{ url('/pages/contact') }}">Contact</a>
             </nav>
-            <div class="nav-actions">
-                <form class="search-form" action="{{ route('search') }}" method="get">
-                    <input type="search" name="q" value="{{ $query ?? '' }}" placeholder="Search products">
-                    <button type="submit">Search</button>
-                </form>
-                <a class="button button-primary" href="{{ $whatsapp }}" data-track-enquiry data-product="General">Enquire Now</a>
+            <div class="nav-actions header-contact">
+                <a class="header-location" href="{{ url('/pages/contact') }}">Hayward, CA</a>
+                <a class="header-phone" href="tel:{{ config('bayarea.phone_href') }}">{{ config('bayarea.phone') }}</a>
             </div>
             <details class="mobile-nav">
                 <summary>Menu</summary>
                 <nav aria-label="Mobile navigation">
-                    <a href="{{ url('/collections/epoxy-for-concrete-floors') }}">Epoxy</a>
-                    <a href="{{ url('/collections/urethane-cement') }}">Urethane Cement</a>
-                    <a href="{{ url('/collections/protective-coat') }}">Topcoats</a>
-                    <a href="{{ url('/collections/flakes') }}">Flakes</a>
+                    <a href="{{ route('home') }}">Home</a>
                     <a href="{{ url('/collections/all') }}">Products</a>
+                    <a href="{{ url('/pages/structural-concrete-repair') }}">Structural Concrete Repair</a>
+                    <a href="{{ url('/collections/epoxy-for-concrete-floors') }}">Epoxy Floor Coatings</a>
+                    <a href="{{ url('/collections/protective-coat') }}">Protective Coating</a>
+                    <a href="{{ url('/pages/deck-waterproofing-in-california') }}">Waterproofing</a>
+                    <a href="{{ url('/pages/esd-static-dissipative-conductive') }}">ESD Flooring</a>
                     <a href="{{ url('/pages/training-schedule') }}">Training</a>
+                    <a href="{{ url('/blogs/news') }}">Blogs</a>
+                    <a href="{{ url('/pages/about-us') }}">About</a>
                     <a href="{{ url('/pages/contact') }}">Contact</a>
-                    <a href="{{ $whatsapp }}" data-track-enquiry data-product="General">Enquire Now</a>
+                    <a href="{{ $whatsapp }}" data-track-enquiry data-product="General">Get Contractor Pricing</a>
                 </nav>
             </details>
         </div>
@@ -94,6 +94,7 @@
             </div>
             <div>
                 <h3>Catalog</h3>
+                <a href="{{ url('/pages/structural-concrete-repair') }}">Structural Concrete Repair</a>
                 <a href="{{ url('/collections/epoxy-for-concrete-floors') }}">Epoxy Floor Coatings</a>
                 <a href="{{ url('/collections/protective-coat') }}">Protective Coatings</a>
                 <a href="{{ url('/collections/urethane-cement') }}">Urethane Cement</a>

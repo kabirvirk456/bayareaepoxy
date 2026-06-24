@@ -16,7 +16,8 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('Bay Area Epoxy Wholesale');
-        $response->assertSee('Epoxy flooring supplies for Bay Area contractors');
+        $response->assertSee('Most Trusted Industrial Flooring');
+        $response->assertSee('Solutions For Every Industry');
     }
 
     public function test_product_slug_is_preserved(): void
@@ -40,5 +41,15 @@ class ExampleTest extends TestCase
         $response = $this->get('/cart');
 
         $response->assertRedirect('/pages/contact');
+    }
+
+    public function test_esd_page_has_system_products(): void
+    {
+        $response = $this->get('/pages/esd-static-dissipative-conductive');
+
+        $response->assertStatus(200);
+        $response->assertSee('ESD Flooring Systems California');
+        $response->assertSee('ESD Conductive Mortar System');
+        $response->assertSee('ESD Static Dissipative System');
     }
 }

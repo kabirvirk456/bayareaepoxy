@@ -54,3 +54,48 @@ document.querySelectorAll('[data-filter-group]').forEach(function (group) {
         }
     });
 });
+
+document.querySelectorAll('[data-link-tools]').forEach(function (tools) {
+    const form = tools.closest('form');
+    const editor = form ? form.querySelector('[data-link-editor]') : null;
+    const textInput = tools.querySelector('[data-link-text]');
+    const urlInput = tools.querySelector('[data-link-url]');
+    const preset = tools.querySelector('[data-link-url-preset]');
+    const button = tools.querySelector('[data-insert-link]');
+
+    if (!editor || !textInput || !urlInput || !button) {
+        return;
+    }
+
+    if (preset) {
+        preset.addEventListener('change', function () {
+            if (preset.value) {
+                urlInput.value = preset.value;
+            }
+        });
+    }
+
+    button.addEventListener('click', function () {
+        const selected = editor.value.slice(editor.selectionStart, editor.selectionEnd).trim();
+        const label = (textInput.value || selected || 'link text').trim();
+        const url = (urlInput.value || (preset ? preset.value : '')).trim();
+
+        if (!url) {
+            urlInput.focus();
+            return;
+        }
+
+        const markdown = '[' + label.replace(/\]/g, '') + '](' + url.replace(/\)/g, '') + ')';
+        const start = editor.selectionStart;
+        const end = editor.selectionEnd;
+        const before = editor.value.slice(0, start);
+        const after = editor.value.slice(end);
+
+        editor.value = before + markdown + after;
+        editor.focus();
+        editor.selectionStart = start;
+        editor.selectionEnd = start + markdown.length;
+
+        textInput.value = '';
+    });
+});
