@@ -51,5 +51,17 @@ class ExampleTest extends TestCase
         $response->assertSee('ESD Flooring Systems California');
         $response->assertSee('ESD Conductive Mortar System');
         $response->assertSee('ESD Static Dissipative System');
+        $response->assertSee('/pages/esd-static-dissipative-conductive/esd-conductive-system', false);
+        $response->assertDontSee('crownpolymers.com/system');
+    }
+
+    public function test_esd_system_detail_page_is_local(): void
+    {
+        $response = $this->get('/pages/esd-static-dissipative-conductive/esd-conductive-system');
+
+        $response->assertStatus(200);
+        $response->assertSee('ESD Conductive System');
+        $response->assertSee('Request System Pricing');
+        $response->assertSee('All ESD Systems');
     }
 }

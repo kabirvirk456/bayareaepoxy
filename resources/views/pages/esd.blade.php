@@ -34,52 +34,7 @@
         ['title' => 'Telecom & Research Labs', 'copy' => 'Communications rooms, test labs, R&D spaces, and clean environments.'],
     ];
 
-    $systems = [
-        [
-            'title' => 'ESD Conductive Mortar System',
-            'type' => 'Conductive mortar',
-            'image' => asset('assets/esd-conductive-mortar.jpg'),
-            'profile' => 'Approx. 1/4 inch profile',
-            'resistance' => '25,000 to 1,000,000 ohms',
-            'summary' => 'Heavy-duty conductive urethane cement mortar for facilities that need static control plus impact, chemical, and thermal-shock durability.',
-            'layers' => ['CrownCrete U Conductive Mortar', 'Conductive epoxy coating', 'ESD wax finish'],
-            'ideal' => ['Battery facilities', 'Industrial manufacturing', 'Heavy traffic operations'],
-            'url' => 'https://crownpolymers.com/system/crowncrete-u-conductive-cementitious-urethane/',
-        ],
-        [
-            'title' => 'ESD Conductive System',
-            'type' => 'Conductive epoxy',
-            'image' => asset('assets/esd-conductive-system.jpg'),
-            'profile' => 'Approx. 50 mils',
-            'resistance' => '25,000 to 1,000,000 ohms',
-            'summary' => 'Conductive epoxy floor system for enhanced static control in high-density technology and precision production environments.',
-            'layers' => ['ESD conductive epoxy primer', 'ESD conductive epoxy coating', 'ESD wax finish'],
-            'ideal' => ['High-density data centers', 'Semiconductor facilities', 'Electronics production'],
-            'url' => 'https://crownpolymers.com/system/esd-conductive-system/',
-        ],
-        [
-            'title' => 'ESD Mortar System',
-            'type' => 'Static dissipative mortar',
-            'image' => asset('assets/esd-mortar-system.jpg'),
-            'profile' => 'Approx. 1/4 inch profile',
-            'resistance' => '1,000,000 to 1,000,000,000 ohms',
-            'summary' => 'Static dissipative mortar system for facilities needing a thicker, more durable floor build with controlled static performance.',
-            'layers' => ['CrownCrete U mortar', '8320 epoxy base coat', 'ESD static dissipative topcoat'],
-            'ideal' => ['Industrial production', 'Processing plants', 'Labs with wheeled traffic'],
-            'url' => 'https://crownpolymers.com/system/urethane-cement-slurry-epoxy-esd-topcoat-1-4-static-dissipative/',
-        ],
-        [
-            'title' => 'ESD Static Dissipative System',
-            'type' => 'Static dissipative epoxy',
-            'image' => asset('assets/esd-static-dissipative-system.jpg'),
-            'profile' => 'Approx. 45 mils',
-            'resistance' => '1,000,000 to 1,000,000,000 ohms',
-            'summary' => 'Seamless static dissipative epoxy system for controlled environments that need easier maintenance and reliable long-term performance.',
-            'layers' => ['ESD epoxy primer', 'ESD epoxy slurry', 'ESD static dissipative topcoat'],
-            'ideal' => ['Data centers', 'Telecom facilities', 'Electronics labs'],
-            'url' => 'https://crownpolymers.com/system/esd-static-dissipative-system/',
-        ],
-    ];
+    $systems = collect(config('bayarea.esd_systems'))->values();
 
     $benefits = [
         ['title' => 'Protect Sensitive Equipment', 'copy' => 'Helps reduce the risk of static damage to critical electronics and technology.'],
@@ -201,7 +156,7 @@
         <div class="esd-system-grid esd-system-grid-polished">
             @foreach ($systems as $system)
                 <article class="esd-system-card">
-                    <img src="{{ $system['image'] }}" alt="{{ $system['title'] }}" loading="lazy" decoding="async">
+                    <img src="{{ asset($system['image']) }}" alt="{{ $system['title'] }}" loading="lazy" decoding="async">
                     <div>
                         <span class="esd-system-type">{{ $system['type'] }}</span>
                         <h3>{{ $system['title'] }}</h3>
@@ -234,7 +189,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="{{ $system['url'] }}" target="_blank" rel="noopener">System details</a>
+                        <a href="{{ url('/pages/esd-static-dissipative-conductive/'.$system['slug']) }}">System details</a>
                     </div>
                 </article>
             @endforeach

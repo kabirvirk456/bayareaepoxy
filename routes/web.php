@@ -534,6 +534,48 @@ Route::get('/pages/structural-concrete-repair/{category}', function (string $cat
     ]);
 })->name('pages.structural-concrete-repair.category');
 
+Route::get('/pages/esd-static-dissipative-conductive/{system}', function (string $system) {
+    $systems = collect(config('bayarea.esd_systems'));
+    $current = $systems->get($system);
+    abort_unless($current, 404);
+
+    $schema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'Product',
+        'name' => $current['title'].' | Crown Polymers ESD System',
+        'description' => $current['summary'],
+        'image' => asset($current['image']),
+        'category' => 'ESD flooring system',
+        'brand' => [
+            '@type' => 'Brand',
+            'name' => 'Crown Polymers',
+        ],
+        'seller' => [
+            '@type' => 'LocalBusiness',
+            'name' => config('bayarea.brand'),
+            'telephone' => config('bayarea.phone'),
+            'email' => config('bayarea.email'),
+            'address' => [
+                '@type' => 'PostalAddress',
+                'streetAddress' => '2495 American Ave',
+                'addressLocality' => 'Hayward',
+                'addressRegion' => 'CA',
+                'postalCode' => '94545',
+                'addressCountry' => 'US',
+            ],
+        ],
+    ];
+
+    return view('pages.esd-system', [
+        'title' => $current['title'].' | ESD Flooring Systems California',
+        'description' => $current['summary'].' Request ESD flooring system quote support from Bay Area Epoxy Wholesale.',
+        'image' => asset($current['image']),
+        'system' => $current,
+        'systems' => $systems->values(),
+        'schema' => $schema,
+    ]);
+})->name('pages.esd.system');
+
 Route::get('/pages/{slug}', function (string $slug) use ($pages) {
     $page = $pages()->get($slug);
     abort_unless($page, 404);
