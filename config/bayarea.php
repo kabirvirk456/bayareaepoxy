@@ -3,9 +3,9 @@
 return [
     'brand' => 'Bay Area Epoxy Wholesale',
     'legal_name' => 'Bayarea Epoxy wholesale',
-    'phone' => '(510) 732-1911',
-    'phone_href' => '+15107321911',
-    'whatsapp_number' => '15107321911',
+    'phone' => '(510) 362-8501',
+    'phone_href' => '+15103628501',
+    'whatsapp_number' => '15103628501',
     'address' => '2495 American Ave, Hayward, CA 94545',
     'email' => 'sales@bayareaepoxywholesale.com',
     'blog_admin_password' => env('BLOG_ADMIN_PASSWORD', 'local-blog-admin'),
